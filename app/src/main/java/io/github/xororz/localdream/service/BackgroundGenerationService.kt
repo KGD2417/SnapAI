@@ -1,4 +1,4 @@
-package io.github.xororz.localdream.service
+package com.example.snapai.service
 
 import android.app.*
 import android.content.Intent
@@ -22,7 +22,7 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
-import io.github.xororz.localdream.R
+import com.example.snapai.R
 import java.io.File
 
 class BackgroundGenerationService : Service() {

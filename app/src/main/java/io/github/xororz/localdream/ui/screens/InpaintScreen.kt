@@ -1,4 +1,4 @@
-package io.github.xororz.localdream.ui.screens
+package com.example.snapai.ui.screens
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -52,7 +52,7 @@ import java.util.Base64
 import kotlin.math.max
 import android.content.Context
 import androidx.compose.ui.graphics.Color as ComposeColor
-import io.github.xororz.localdream.R
+import com.example.snapai.R
 
 enum class ToolMode {
     BRUSH,

@@ -1,4 +1,4 @@
-package io.github.xororz.localdream.ui.theme
+package com.example.snapai.ui.theme
 
 import android.app.Activity
 import android.os.Build

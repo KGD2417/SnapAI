@@ -1,4 +1,4 @@
-package io.github.xororz.localdream.ui.screens
+package com.example.snapai.ui.screens
 
 import android.content.Context
 import android.content.Intent
@@ -16,8 +16,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import io.github.xororz.localdream.data.*
-import io.github.xororz.localdream.navigation.Screen
+import com.example.snapai.data.*
+import com.example.snapai.navigation.Screen
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -39,7 +39,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
-import io.github.xororz.localdream.R
+import com.example.snapai.R
 import kotlinx.coroutines.withTimeout
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.HorizontalPager

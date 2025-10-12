@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "io.github.xororz.localdream"
+    namespace = "com.example.snapai"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "io.github.xororz.localdream"
+        applicationId = "com.example.snapai"
         minSdk = 28
 //        minSdk = 31
         targetSdk = 36

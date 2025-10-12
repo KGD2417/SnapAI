@@ -1,4 +1,4 @@
-package io.github.xororz.localdream
+package com.example.snapai
 
 import org.junit.Test
 

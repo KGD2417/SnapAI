@@ -1,4 +1,4 @@
-package io.github.xororz.localdream.data
+package com.example.snapai.data
 
 import android.content.Context
 import kotlinx.coroutines.flow.Flow

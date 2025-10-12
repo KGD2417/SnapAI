@@ -1,4 +1,4 @@
-package io.github.xororz.localdream.ui.screens
+package com.example.snapai.ui.screens
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -36,7 +36,7 @@ import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import io.github.xororz.localdream.R
+import com.example.snapai.R
 import io.moyuru.cropify.Cropify
 import io.moyuru.cropify.CropifyOption
 import io.moyuru.cropify.CropifySize

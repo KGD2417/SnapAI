@@ -1,4 +1,4 @@
-package io.github.xororz.localdream.service
+package com.example.snapai.service
 
 import android.app.*
 import android.content.Context
@@ -9,16 +9,16 @@ import android.os.IBinder
 import android.util.Log
 import androidx.compose.runtime.remember
 import androidx.core.app.NotificationCompat
-import io.github.xororz.localdream.R
-import io.github.xororz.localdream.data.Model
-import io.github.xororz.localdream.data.ModelFile
+import com.example.snapai.R
+import com.example.snapai.data.Model
+import com.example.snapai.data.ModelFile
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeUnit
-import io.github.xororz.localdream.data.ModelRepository
-import io.github.xororz.localdream.BuildConfig
+import com.example.snapai.data.ModelRepository
+import com.example.snapai.BuildConfig
 import java.nio.file.Files
 import java.nio.file.Paths
 
@@ -34,7 +34,7 @@ class BackendService : Service() {
         private const val NOTIFICATION_ID = 2
         private const val CHANNEL_ID = "backend_service_channel"
 
-        const val ACTION_STOP = "io.github.xororz.localdream.STOP_GENERATION"
+        const val ACTION_STOP = "com.example.snapai.STOP_GENERATION"
 
         private object StateHolder {
             val _backendState = MutableStateFlow<BackendState>(BackendState.Idle)

@@ -1,12 +1,12 @@
-package io.github.xororz.localdream.data
+package com.example.snapai.data
 
 import android.content.Context
 import android.os.Build
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import io.github.xororz.localdream.BuildConfig
-import io.github.xororz.localdream.R
+import com.example.snapai.BuildConfig
+import com.example.snapai.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

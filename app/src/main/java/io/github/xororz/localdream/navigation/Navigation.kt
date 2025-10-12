@@ -1,4 +1,4 @@
-package io.github.xororz.localdream.navigation
+package com.example.snapai.navigation
 
 sealed class Screen(val route: String) {
     object ModelList : Screen("model_list")

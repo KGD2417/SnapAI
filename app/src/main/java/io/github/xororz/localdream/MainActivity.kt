@@ -1,4 +1,4 @@
-package io.github.xororz.localdream
+package com.example.snapai
 
 import android.Manifest
 import android.os.Build
@@ -17,10 +17,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import io.github.xororz.localdream.navigation.Screen
-import io.github.xororz.localdream.ui.screens.ModelListScreen
-import io.github.xororz.localdream.ui.screens.ModelRunScreen
-import io.github.xororz.localdream.ui.theme.LocalDreamTheme
+import com.example.snapai.navigation.Screen
+import com.example.snapai.ui.screens.ModelListScreen
+import com.example.snapai.ui.screens.ModelRunScreen
+import com.example.snapai.ui.theme.LocalDreamTheme
 import androidx.core.content.ContextCompat
 import android.content.pm.PackageManager
 

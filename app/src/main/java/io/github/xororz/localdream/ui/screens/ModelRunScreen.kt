@@ -1,4 +1,4 @@
-package io.github.xororz.localdream.ui.screens
+package com.example.snapai.ui.screens
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -27,8 +27,8 @@ import androidx.activity.compose.BackHandler
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavController
-import io.github.xororz.localdream.data.ModelRepository
-import io.github.xororz.localdream.service.BackendService
+import com.example.snapai.data.ModelRepository
+import com.example.snapai.service.BackendService
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -64,10 +64,10 @@ import androidx.core.content.ContextCompat
 import android.widget.Toast
 import androidx.compose.ui.res.stringResource
 import androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale
-import io.github.xororz.localdream.R
-import io.github.xororz.localdream.data.GenerationPreferences
-import io.github.xororz.localdream.service.BackgroundGenerationService
-import io.github.xororz.localdream.service.BackgroundGenerationService.GenerationState
+import com.example.snapai.R
+import com.example.snapai.data.GenerationPreferences
+import com.example.snapai.service.BackgroundGenerationService
+import com.example.snapai.service.BackgroundGenerationService.GenerationState
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -90,7 +90,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.ui.geometry.Offset
-import io.github.xororz.localdream.BuildConfig
+import com.example.snapai.BuildConfig
 
 import android.net.Uri
 import coil.compose.AsyncImage
