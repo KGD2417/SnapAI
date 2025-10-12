@@ -1,4 +1,4 @@
-# Local Dream - My Build From Source Guide
+# Snap AI
 
 Step-by-step guide to build Local Dream APK on my machine.
 
