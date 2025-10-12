@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Local Dream</string>
+
+    <!-- Models -->
+    <string name="anythingv5_description">Anime Image Generation</string>
+    <string name="chilloutmix_description">ChilloutMix Series</string>
+    <string name="qteamix_description">Chibi Style Anime</string>
+    <string name="cuteyukimix_description">Cute Style Anime</string>
+    <string name="absolutereality_description">Realistic Image Generation</string>
+    <string name="sd21_description">General Image Generation</string>
+    <string name="ponyv55_description">Pony Diffusion Series</string>
+
+    <!-- Models -->
+    <string name="backend_notify">Model Backend Service Running</string>
+    <string name="backend_notify_title">SD Model Backend</string>
+    <string name="generating_notify">Image Generating…</string>
+
+    <!-- Common -->
+    <string name="settings">Settings</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="back">Back</string>
+    <string name="close">Close</string>
+    <string name="delete">Delete</string>
+    <string name="delete_model">Delete Model</string>
+    <string name="delete_confirm">Delete selected %s models? This action cannot be undone.</string>
+    <string name="got_it">Got It!</string>
+    <string name="about_app">Note</string>
+    <string name="must_read">This APP supports running stable diffusion image generation on CPU/GPU and some Qualcomm NPUs.\n\nIf your chip is not one of the following, you can only run it on CPU/GPU. Supported NPU list:\n\n- Snapdragon 8 Gen 1\n- Snapdragon 8 Gen 2\n- Snapdragon 8 Gen 3\n- Snapdragon 8 Elite\n- Snapdragon 8 Elite Gen 5\n\nFor Qualcomm chips released in 2020 and later, experimental support is provided, but NPU execution is not guaranteed.\n\nThis project is open source at https://github.com/xororz/local-dream where you can view the source code or submit issues</string>
+    <string name="help">help</string>
+
+    <!-- Model List Screen -->
+    <string name="available_models">Available Models</string>
+    <string name="selected_items">%d Selected</string>
+    <string name="download_settings">Download Settings</string>
+    <string name="download">Download</string>
+    <string name="download_from">Download From</string>
+    <string name="download_settings_hint">Download from huggingface or other mirror url</string>
+    <string name="model_size">Total Size: ~%s</string>
+    <string name="downloaded">Downloaded</string>
+    <string name="partially_downloaded">Partially Downloaded</string>
+    <string name="continue_download">Continue Download</string>
+    <string name="continue_download_hint">Model "%1$s" is partially downloaded. Continue downloading the remaining files?</string>
+    <string name="downloading_file">Downloading file %1$d/%2$d: %3$s</string>
+    <string name="delete_success">Deleted</string>
+    <string name="delete_failed">Error in deletion</string>
+    <string name="cannot_download">Cannot Download</string>
+    <string name="cannot_download_hint">A model is being downloaded, please wait.</string>
+    <string name="download_model">Download Model</string>
+    <string name="download_model_hint">Are you sure to download %s ? Please do not exit the application during the download process.\n\nWe currently allow NPU model downloads for all Qualcomm chips, but older chips may not be able to run them.</string>
+    <string name="download_done">Download Finished</string>
+    <string name="unsupport_npu">Your device is not supported. Try the CPU model please.</string>
+    <string name="cpu_models">CPU Models</string>
+    <string name="npu_models">NPU Models</string>
+    <string name="no_cpu_models">No Models</string>
+    <string name="no_npu_models">No Models</string>
+    <string name="img2img_hint">Use img2img feature. Turn off if you don\'t need or encounter any problems.</string>
+    <string name="download_patch">Download High Resolution Patch</string>
+    <string name="download_patch_hint">Download %1$dx%1$d high resolution patch for %2$s? This will enable %1$dpx generation.</string>
+    <string name="highres_patch">HighRes Patch</string>
+
+    <!-- Crop Screen -->
+    <string name="crop_image">Crop Image</string>
+    <string name="crop_hint">Drag to adjust the crop area</string>
+
+    <!-- Inpaint Screen -->
+    <string name="set_inpaint_area">Set Inpaint Area</string>
+    <string name="inpaint_hint">Paint over the areas you want to inpaint</string>
+    <string name="brush_size">Brush Size</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
+    <string name="clear">Clear</string>
+    <string name="brush_color">Brush Color</string>
+
+    <!-- Run Screen -->
+    <string name="prompt_settings">Prompts</string>
+    <string name="advanced_settings">Advanced</string>
+    <string name="advanced_settings_title">Advanced Settings</string>
+    <string name="image_prompt">Image Generation Prompt</string>
+    <string name="negative_prompt">Negative Prompt</string>
+    <string name="generate_image">Generate</string>
+    <string name="generating">Generating image…</string>
+    <string name="generation_progress">%d%%</string>
+    <string name="no_results">No results yet</string>
+    <string name="no_results_hint">Create an image first~</string>
+    <string name="go_to_generate">Create</string>
+    <string name="prompt_tab">Prompt</string>
+    <string name="result_tab">Result</string>
+    <string name="confirm_exit">Confirm to Exit</string>
+    <string name="confirm_exit_hint">Generation in progress, Are you sure to Exit?</string>
+    <string name="reset">Reset</string>
+    <string name="reset_hint">Reset all parameters? This action cannot be undone. </string>
+    <string name="media_permission_hint">Media permission is needed for img2img generation</string>
+    <string name="backend_failed">Backend start failed. Maybe your device is not supported.</string>
+
+    <!-- Parameter Settings -->
+    <string name="generation_params">Generation Params</string>
+    <string name="steps">Steps: %d</string>
+    <string name="cfg_scale">CFG Scale: %.1f</string>
+    <string name="image_size">Image Size: %1$dx%2$d</string>
+    <string name="random_seed">Random Seed (Optional)</string>
+    <string name="use_last_seed">Use Last Seed (%s)</string>
+    <string name="result_params">steps: %s / CFG: %.1f / seed: %s"</string>
+    <string name="result_params_2">size: %s / time: %s / %s"</string>
+    <string name="params_detail">Details</string>
+    <string name="basic_params">Basic</string>
+    <string name="basic_step">Steps: %d</string>
+    <string name="basic_size">Size: %dx%d</string>
+    <string name="basic_seed">Seed: %s</string>
+    <string name="basic_runtime">Runtime: %s</string>
+    <string name="basic_time">Time: %s</string>
+    <string name="opencl_warning">GPU runtime warning: The first run at each resolution will be slow as it generates cache files. Subsequent runs will be much faster.</string>
+
+    <!-- Error Messages -->
+    <string name="error_device_not_supported">Your device is not supported yet, please use CPU version</string>
+    <string name="error_download_failed">Download failed: %s</string>
+    <string name="error_request_failed">Request failed: %s</string>
+    <string name="error_generation_failed">Generation failed: %s</string>
+    <string name="unknown_error">unknown error</string>
+
+    <!-- Info Messages -->
+    <string name="image_saved">Image saved to gallery</string>
+    <string name="loading_model">Loading model…</string>
+    
+    <!-- File Manager -->
+    <string name="file_manager">File Manager</string>
+    <string name="file_manager_desc">Manage model files</string>
+    <string name="delete_file">Delete File</string>
+    <string name="delete_file_confirm">Are you sure you want to delete the file \"%s\"?</string>
+    <string name="file_deleted">File deleted successfully</string>
+    <string name="no_model_files">No model files found</string>
+    <string name="loading_files">Loading files…</string>
+    <string name="back_to_folders">Back to Folders</string>
+    <string name="model_folder">Model: %s</string>
+    <string name="file_count">%d files</string>
+    
+    <!-- Settings -->
+    <string name="general_settings">General Settings</string>
+    <string name="download_source">Download Source</string>
+    <string name="feature_settings">Feature Settings</string>
+    <string name="file_management">File Management</string>
+    
+    <!-- Custom Model -->
+    <string name="add_custom_model">Add Custom Model</string>
+    <string name="add_custom_npu_model">Add Custom NPU Model</string>
+    <string name="custom_model">Custom Model</string>
+    <string name="custom_npu_model">Custom NPU Model</string>
+    <string name="custom_model_name">Model Name</string>
+    <string name="custom_model_name_hint">Enter model name</string>
+    <string name="select_model_file">Select Model File</string>
+    <string name="select_zip_file">Select ZIP File</string>
+    <string name="zip_file_selected">ZIP File Selected</string>
+    <string name="file_selected">File Selected</string>
+    <string name="add_model">Add Model</string>
+    <string name="custom_model_hint">Only supports SD1.5 architecture safetensors model files</string>
+    <string name="custom_npu_model_hint">Select a ZIP file containing NPU model files. Only available on Qualcomm devices.</string>
+    <string name="converting">Converting...</string>
+    <string name="model_conversion_success">Model conversion successful!</string>
+    <string name="model_conversion_failed">Conversion failed: %s</string>
+    <string name="npu_model_added_success">NPU model added successfully!</string>
+    <string name="npu_model_add_failed">NPU model add failed: %s</string>
+    <string name="preparing_model">Preparing model...</string>
+    <string name="preparing_npu_model">Preparing NPU model...</string>
+    <string name="extracting_zip_file">Extracting ZIP file...</string>
+    <string name="copying_model_file">Copying model file...</string>
+    <string name="copying_base_files">Copying base files...</string>
+    <string name="converting_model">Converting model...</string>
+    <string name="clip_skip">CLIP Skip</string>
+    <string name="clip_skip_hint">Set CLIP skip layers (1 or 2)</string>
+    <string name="lora_files_optional">LoRA Files (Optional)</string>
+    <string name="add_lora_file">Add LoRA File</string>
+    <string name="selected_lora_files">Selected LoRA files:</string>
+    <string name="copying_lora_files">Copying LoRA files...</string>
+    <string name="lora_weight">Weight:</string>
+
+    <!-- Embedding Manager -->
+    <string name="embedding_management">Embedding Management</string>
+    <string name="embedding_manager">Embedding Manager</string>
+    <string name="no_embeddings">No embedding files found</string>
+    <string name="import_embedding">Import Embedding</string>
+    <string name="delete_embedding">Delete Embedding</string>
+    <string name="delete_embedding_confirm">Are you sure you want to delete the embedding \"%s\"?</string>
+    <string name="embedding_deleted">Embedding deleted successfully</string>
+    <string name="embedding_imported">Embedding imported successfully</string>
+    <string name="embedding_import_failed">Embedding import failed: %s</string>
+    <string name="select_embedding_file">Select Embedding File</string>
+    <string name="embedding_file_hint">Select a safetensors embedding file</string>
+    <string name="only_safetensors_supported">Only .safetensors files are supported</string>
+</resources>
