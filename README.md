@@ -1,185 +1,203 @@
 # Snap AI
 
-Step-by-step guide to build Local Dream APK on my machine.
+On-device AI art generation for Android. Stable Diffusion runs entirely on the
+phone — the model lives locally, prompts and images never leave the device, and
+generation works with the network off.
 
-## My System Requirements
+NPU inference is powered by **Qualcomm AI Engine Direct (QNN / QIDK)**, so on a
+supported Snapdragon the UNet runs on the Hexagon NPU instead of the CPU, which
+is what makes on-device generation fast enough to be usable.
 
-**Operating System:**
-- Linux (recommended)
-- OR Windows with WSL2 installed
-- macOS might work but not verified
+**Why:** cloud image generation means your prompts and images sit on someone
+else's server, you pay per image, and you need a connection. Running the model
+on-device gives you privacy, low latency, and offline capability.
 
-**Required Tools:**
-- Rust
-- Ninja build system
-- CMake
-- Android Studio
-- Git
+## How it works
 
-## Step 1: Install Prerequisites
+```
+Compose UI (Kotlin)
+      │  HTTP on localhost:8081
+      ▼
+libstable_diffusion_core.so   ← native binary, launched by BackendService
+      │
+      ├── QNN / QIDK  → UNet + VAE on the Hexagon NPU   (NPU models, .bin)
+      └── MNN         → CPU/GPU fallback                (CPU models, .mnn)
+```
 
-### Install Rust
+| Piece | Where |
+|---|---|
+| UI, navigation, model download | `app/src/main/java/com/example/snapai/` |
+| Backend process launcher | `service/BackendService.kt` |
+| Native inference server | `app/src/main/cpp/src/main.cpp` |
+| QNN graph execution | `app/src/main/cpp/src/QnnModel.hpp` |
+| Sampler | `app/src/main/cpp/src/DPMSolverMultistepScheduler.hpp` |
+| Model catalog / download URLs | `data/Model.kt` |
+
+Models are downloaded on first use, not shipped in the APK.
+
+## Build status
+
+| | |
+|---|---|
+| Kotlin / Compose app | builds — `./gradlew assembleBasicDebug` produces `SnapAI_armv8a_2.0.0.apk` (67 MB), label `Snap AI`, launcher `com.example.snapai.MainActivity` |
+| Native core (`build.sh`) | **not built in this tree** — needs the QNN SDK + NDK, see Step 4 |
+| Release APK | needs the `RELEASE_*` signing properties, see Step 5 |
+
+A fresh clone builds an installable APK, but **image generation will not work
+until Step 4 has been run** — `jniLibs/` and `assets/qnnlibs/` are build outputs
+and are gitignored, so they are not in the repo.
+
+## Supported NPUs
+
+Snapdragon 8 Gen 1 / Gen 2 / Gen 3 / 8 Elite / 8 Elite Gen 5. Other Qualcomm
+chips from 2020 onward are experimental. Anything else falls back to CPU/GPU.
+
+---
+
+# Building it
+
+## My system requirements
+
+- Linux, or Windows with WSL2 (macOS unverified)
+- Rust, Ninja, CMake, Android Studio, Git, ccache
+
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
 rustup default stable
 rustup target add aarch64-linux-android
+
+sudo apt update && sudo apt install ninja-build cmake ccache git   # Ubuntu/WSL
+brew install ninja cmake ccache git                                # macOS
 ```
 
-### Install Ninja and CMake
+Rust is needed because `tokenizers-cpp` builds the HuggingFace tokenizer from
+Rust source.
 
-**On Ubuntu/Debian:**
-```bash
-sudo apt update
-sudo apt install ninja-build cmake git
-```
+## Step 1: SDKs
 
-**On macOS:**
-```bash
-brew install ninja cmake git
-```
+**QNN SDK 2.39** — https://qpm.qualcomm.com/#/main/tools/details/qualcomm_ai_engine_direct
+(Qualcomm account required). Extract it somewhere I'll remember.
 
-**On Windows (WSL):**
-```bash
-sudo apt update
-sudo apt install ninja-build cmake git
-```
+**Android NDK** — https://developer.android.com/ndk/downloads (r27c is what I used).
 
-### Install Android Studio
-- Download from: https://developer.android.com/studio
-- Install and complete the setup wizard
-
-## Step 2: Download Required SDKs
-
-### Download QNN SDK 2.39
-1. Go to: https://qpm.qualcomm.com/#/main/tools/details/qualcomm_ai_engine_direct
-2. Create/login to Qualcomm account (required)
-3. Download QNN SDK version 2.39
-4. Extract to a location I'll remember (e.g., `~/SDKs/QNN_SDK_2.39`)
-
-### Download Android NDK
-1. Go to: https://developer.android.com/ndk/downloads
-2. Download latest NDK
-3. Extract to a location (e.g., `~/SDKs/android-ndk-r26d`)
-
-**Note:** Write down these paths - I'll need them in Step 4!
-
-My SDK paths:
-- QNN SDK: `_____________________________`
+My paths:
+- QNN SDK: `_____________________________` (the `qairt/<version>` directory)
 - Android NDK: `_____________________________`
 
-## Step 3: Clone the Repository
+## Step 2: Clone
 
 ```bash
-cd ~/Projects  # or wherever I keep my code
-git clone --recursive https://github.com/xororz/local-dream.git
-cd local-dream
+git clone https://github.com/KGD2417/SnapAI.git
+cd SnapAI
 ```
 
-**Important:** The `--recursive` flag downloads all submodules. Don't skip it!
+No `--recursive` needed — MNN, tokenizers-cpp, zstd and the rest are vendored
+in `app/src/main/cpp/3rdparty/`.
 
-## Step 4: Configure SDK Paths
+## Step 3: Point the build at my SDKs
 
-### Edit CMakeLists.txt
+Both paths come from environment variables now, so I don't have to edit any
+files:
+
 ```bash
-nano app/src/main/cpp/CMakeLists.txt
+export QNN_SDK_ROOT=~/SDKs/qairt/2.39.0.250926
+export ANDROID_NDK_ROOT=~/SDKs/android-ndk-r27c
 ```
 
-Find the line with `QNN_SDK_ROOT` and update it to my QNN SDK path:
-```cmake
-set(QNN_SDK_ROOT "/home/myuser/SDKs/QNN_SDK_2.39")
-```
+CMake fails immediately with a clear message if `QNN_SDK_ROOT` is wrong, rather
+than spewing copy errors. There's still a hardcoded fallback path in
+`app/src/main/cpp/CMakeLists.txt` from my old machine — the env var wins.
 
-Save and exit (Ctrl+X, then Y, then Enter)
+## Step 4: Build the native libraries first
 
-### Edit CMakePresets.json
+This has to happen **before** the APK build — Gradle just packages whatever is
+already in `jniLibs/` and `assets/`, it does not run CMake.
+
 ```bash
-nano app/src/main/cpp/CMakePresets.json
-```
-
-Find the line with `ANDROID_NDK_ROOT` and update it to my NDK path:
-```json
-"ANDROID_NDK_ROOT": "/home/myuser/SDKs/android-ndk-r26d"
-```
-
-Save and exit
-
-## Step 5: Build Native Libraries
-
-Look for build scripts in the project:
-```bash
-ls *.sh  # Check for build scripts
-```
-
-If there's a `build.sh` or similar:
-```bash
-chmod +x build.sh
+cd app/src/main/cpp
 ./build.sh
 ```
 
-If no build script exists, I'll need to build manually with CMake:
+That does three things:
+1. builds `libstable_diffusion_core.so` for arm64-v8a
+2. copies the QNN runtime `.so` files to `app/src/main/assets/qnnlibs/`
+3. copies the executable to `app/src/main/jniLibs/arm64-v8a/`
+
+On Windows use `build.bat` instead. First build is 15–30 minutes (MNN is big);
+ccache makes rebuilds much faster.
+
+Both output directories are gitignored, so this step is required on every fresh
+clone. Skipping it still produces a working-looking APK — it opens, lists and
+downloads models, then fails at generation with "Backend start failed".
+
+## Step 5: Build the APK
+
+Open the project in Android Studio, let Gradle sync, then
+**Build → Generate Signed Bundle / APK → APK**.
+
+Or from the command line:
+
 ```bash
-cd app/src/main/cpp
-cmake -B build -G Ninja
-cmake --build build
-cd ../../..
+./gradlew assembleBasicDebug      # no signing setup needed
+./gradlew assembleBasicRelease    # needs the RELEASE_* properties below
 ```
 
-## Step 6: Build APK in Android Studio
+Two flavors: `basic`, and `filter` which additionally runs a NSFW safety
+checker model.
 
-1. Open Android Studio
-2. Click "Open an Existing Project"
-3. Navigate to my `local-dream` folder and select it
-4. Wait for Gradle sync to complete (this might take several minutes)
-5. Go to: **Build → Generate Signed Bundle / APK**
-6. Select **APK**
-7. Create a new keystore or use an existing one
-8. Click **Next** → **Release** → **Finish**
+The release build reads `RELEASE_STORE_FILE`, `RELEASE_STORE_PASSWORD`,
+`RELEASE_KEY_ALIAS` and `RELEASE_KEY_PASSWORD` as Gradle properties and fails
+without them. They are deliberately **not** in the repo's `gradle.properties` —
+put them in `~/.gradle/gradle.properties` or pass them with `-P`, so the
+keystore password never gets committed.
 
-The APK will be in: `app/release/app-release.apk`
+Output: `app/build/outputs/apk/basic/<debug|release>/SnapAI_armv8a_2.0.0.apk`
 
-## Step 7: Install on My Phone
+## Step 6: Install
 
-### Enable Developer Options on Phone:
-1. Settings → About Phone
-2. Tap "Build Number" 7 times
-3. Go back → Developer Options
-4. Enable "USB Debugging"
+Phone: Settings → About Phone → tap Build Number 7× → Developer Options →
+enable USB Debugging.
 
-### Install via USB:
 ```bash
-adb install app/release/app-release.apk
+adb install app/build/outputs/apk/basic/debug/SnapAI_armv8a_2.0.0.apk
 ```
 
-OR transfer the APK to my phone and install manually.
+## Troubleshooting
 
-## Troubleshooting My Build
+**`./gradlew` fails with just a version number as the error (e.g. `* What went
+wrong: 25.0.3`)** — my default JDK is too new. Gradle 8.14.3 supports Java 24 at
+most, and I have JDK 25 on `PATH`. Android Studio is fine (it uses its own
+bundled JDK 21); only the command line breaks. Fix it per-invocation:
 
-**CMake can't find NDK:**
-- Double-check the path in `CMakePresets.json`
-- Make sure there are no trailing slashes
-- Use absolute paths, not relative ones
+```bash
+./gradlew assembleBasicRelease "-Dorg.gradle.java.home=C:/Program Files/Android/Android Studio/jbr"
+```
 
-**QNN SDK not found:**
-- Verify the path in `CMakeLists.txt`
-- Make sure I downloaded the correct version (2.39)
+or point `JAVA_HOME` at a JDK 17–21 for the shell. Not putting the path in
+`gradle.properties` — it's specific to this machine.
 
-**Gradle sync fails:**
-- Check internet connection
-- Try: File → Invalidate Caches → Invalidate and Restart
+**"QNN SDK not found at ..."** — `QNN_SDK_ROOT` isn't set or points at the wrong
+level. It must be the `qairt/<version>` directory, the one containing `lib/` and
+`include/`.
 
-**Native library build fails:**
-- Make sure all prerequisites are installed
-- Check if submodules were cloned: `git submodule update --init --recursive`
+**CMake can't find the NDK** — `ANDROID_NDK_ROOT` unset. `CMakePresets.json`
+builds the toolchain path from it; there is no default.
 
-**Out of disk space:**
-- This project needs ~10GB for build files
-- Clean up space and try again
+**`ccache: not found`** — install it, or drop the two
+`CMAKE_*_COMPILER_LAUNCHER` lines from `CMakePresets.json`.
 
-**Rust target missing:**
-- Run: `rustup target add aarch64-linux-android`
+**App installs but generation fails instantly** — the native binary didn't get
+packaged. Check `app/src/main/jniLibs/arm64-v8a/libstable_diffusion_core.so`
+exists and rerun Step 4.
 
-## Build Notes
+**"Backend start failed"** on a real device — usually an unsupported NPU. Try a
+CPU model from the model list to confirm the rest of the app works.
 
-**Build times on my machine:**
-- First build: ~15-30 minutes (downloads dependencies)
+**Out of disk space** — the build needs roughly 10GB.
+
+## Credit
+
+Built on the open source [Local Dream](https://github.com/xororz/local-dream)
+project, which provides the QNN inference core and the converted models hosted
+on HuggingFace.

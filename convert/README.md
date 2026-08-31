@@ -61,6 +61,6 @@ Download the conversion scripts from [here](https://chino.icu/local-dream/npucon
 
    If you have successfully run the script, you will find the converted models in `output/qnn_models_xxx`. **And if you have executed the script once, set a different `--min_soc` will be much faster(minutes) as it will skip some steps.**
 
-5. Zip the `output/qnn_models_xxx` folder and import it in the Local Dream app.
+5. Zip the `output/qnn_models_xxx` folder and import it in the Snap AI app (Settings → Add Custom NPU Model).
 
 The conversion process may take a long time (up to several hours) depending on your hardware.

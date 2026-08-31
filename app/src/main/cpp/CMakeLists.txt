@@ -4,8 +4,15 @@ project(libstable_diffusion_core.so C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# QNN SDK PATH
-set(QNN_SDK_ROOT /mnt/c/Users/KGD546/Downloads/v2.39.0.250926/qairt/2.39.0.250926)
+# QNN SDK PATH - override with: export QNN_SDK_ROOT=/path/to/qairt/<version>
+if(DEFINED ENV{QNN_SDK_ROOT})
+    set(QNN_SDK_ROOT $ENV{QNN_SDK_ROOT})
+else()
+    set(QNN_SDK_ROOT /mnt/c/Users/KGD546/Downloads/v2.39.0.250926/qairt/2.39.0.250926)
+endif()
+if(NOT EXISTS ${QNN_SDK_ROOT}/lib/aarch64-android)
+    message(FATAL_ERROR "QNN SDK not found at ${QNN_SDK_ROOT} - set the QNN_SDK_ROOT env var to your qairt/<version> directory")
+endif()
 
 file(COPY ${QNN_SDK_ROOT}/examples/QNN/SampleApp/SampleApp/
         DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/SampleApp)

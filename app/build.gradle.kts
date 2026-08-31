@@ -94,7 +94,7 @@ android {
         variant.outputs.all {
             val output = this as com.android.build.gradle.internal.api.BaseVariantOutputImpl
             val flavorName = variant.flavorName
-            output.outputFileName = "LocalDream_armv8a_${variant.versionName}.apk"
+            output.outputFileName = "SnapAI_armv8a_${variant.versionName}.apk"
         }
     }
 }

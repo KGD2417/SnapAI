@@ -591,7 +591,7 @@ fun ModelListScreen(
             LargeTopAppBar(
                 title = {
                     Column {
-                        Text("Local Dream✨")
+                        Text(stringResource(R.string.app_name) + "✨")
                         Text(
                             if (isSelectionMode) stringResource(
                                 R.string.selected_items,

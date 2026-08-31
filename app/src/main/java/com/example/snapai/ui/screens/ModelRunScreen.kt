@@ -186,7 +186,10 @@ private suspend fun saveImage(
                 val contentValues = ContentValues().apply {
                     put(MediaStore.Images.Media.DISPLAY_NAME, filename)
                     put(MediaStore.Images.Media.MIME_TYPE, "image/png")
-                    put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+                    put(
+                        MediaStore.Images.Media.RELATIVE_PATH,
+                        "${Environment.DIRECTORY_PICTURES}/SnapAI"
+                    )
                 }
 
                 val resolver = context.contentResolver
@@ -203,7 +206,7 @@ private suspend fun saveImage(
                     Environment.getExternalStoragePublicDirectory(
                         Environment.DIRECTORY_PICTURES
                     ),
-                    "LocalDream"
+                    "SnapAI"
                 )
 
                 if (!imagesDir.exists()) {

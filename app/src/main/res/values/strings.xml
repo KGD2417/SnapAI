@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Local Dream</string>
+    <string name="app_name">Snap AI</string>
 
     <!-- Models -->
     <string name="anythingv5_description">Anime Image Generation</string>
@@ -28,7 +28,7 @@
     <string name="delete_confirm">Delete selected %s models? This action cannot be undone.</string>
     <string name="got_it">Got It!</string>
     <string name="about_app">Note</string>
-    <string name="must_read">This APP supports running stable diffusion image generation on CPU/GPU and some Qualcomm NPUs.\n\nIf your chip is not one of the following, you can only run it on CPU/GPU. Supported NPU list:\n\n- Snapdragon 8 Gen 1\n- Snapdragon 8 Gen 2\n- Snapdragon 8 Gen 3\n- Snapdragon 8 Elite\n- Snapdragon 8 Elite Gen 5\n\nFor Qualcomm chips released in 2020 and later, experimental support is provided, but NPU execution is not guaranteed.\n\nThis project is open source at https://github.com/xororz/local-dream where you can view the source code or submit issues</string>
+    <string name="must_read">Snap AI generates images entirely on your device. Prompts and images never leave the phone, and generation works fully offline once a model is downloaded.\n\nImage generation runs on the CPU/GPU, or on the Qualcomm NPU via the Qualcomm AI Engine Direct (QNN/QIDK) runtime for much lower latency. Supported NPU list:\n\n- Snapdragon 8 Gen 1\n- Snapdragon 8 Gen 2\n- Snapdragon 8 Gen 3\n- Snapdragon 8 Elite\n- Snapdragon 8 Elite Gen 5\n\nFor Qualcomm chips released in 2020 and later, experimental support is provided, but NPU execution is not guaranteed. On any other chip, use the CPU/GPU models.\n\nBuilt on the open source Local Dream project (https://github.com/xororz/local-dream)</string>
     <string name="help">help</string>
 
     <!-- Model List Screen -->
